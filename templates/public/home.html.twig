@@ -1,1 +1,46 @@
 {% extends "base.html.twig" %}
+
+{% block body %}
+    {# <div class="container pt-5 pb-5">
+        <div class="row">
+            {% include "public/shared/_messages_flash.html.twig" %}
+        </div>
+    </div> #}
+    
+    <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://fr.tradingview.com" rel="noopener" target="_blank"><span class="blue-text">Cotations</span></a> par TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js" async>
+  {
+  "symbols": [
+    {
+      "proName": "FOREXCOM:SPXUSD",
+      "title": "S&P 500"
+    },
+    {
+      "proName": "FOREXCOM:NSXUSD",
+      "title": "Nasdaq 100"
+    },
+    {
+      "proName": "FX_IDC:EURUSD",
+      "title": "EUR/USD"
+    },
+    {
+      "proName": "BITSTAMP:BTCUSD",
+      "title": "BTC/USD"
+    },
+    {
+      "proName": "BITSTAMP:ETHUSD",
+      "title": "ETH/USD"
+    }
+  ],
+  "colorTheme": "light",
+  "isTransparent": true,
+  "showSymbolLogo": true,
+  "locale": "fr"
+}
+  </script>
+</div>
+<!-- TradingView Widget END -->
+{% endblock %}

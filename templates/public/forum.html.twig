@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Les analyses!{% endblock %}
+
+{% block body %}
+    <div class="container col-3">
+    <h2>Bienvenue sur le forum</h2>
+    </div>
+    {% if app.user %}
+        <button type="submit" class="btn btn-warning">Poster une nouvelle analyse</button>
+    {% endif %}
+{% endblock %}
