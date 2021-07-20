@@ -2,17 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity("email", message="There is already an account with this email")
+ * @UniqueEntity("pseudo", message="Ce pseudo est déjà utilisé.")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -25,6 +29,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *  @Assert\NotBlank(
+     *      message="vous devez ajouter un email"
+     * )
      */
     private $email;
 
@@ -41,6 +48,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     //pseudo unique
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     *  @Assert\NotBlank(
+     *      message="Vous devez ajouter un pseudo.")
+     * 
+     *  @Assert\Length(
+     *      min = 4,
+     *      minMessage="Votre pseudo doit faire au moins 4 caractères.")
      */
     private $pseudo;
 
