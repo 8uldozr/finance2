@@ -23,7 +23,7 @@ class ImageService
         }
     }
 
-    public function edit(object $image = null, object $entity,string $imageOriginal)
+    public function edit(object $image = null, object $entity, string $imageOriginal)
     {
         if($image !== null)
         {
@@ -34,7 +34,7 @@ class ImageService
         }
     }
 
-    public function deleteImage(string $imageUrl)
+    public function deleteImage($imageUrl)
     {
         //Processus de supression de l'image précédente
         if($imageUrl !== null && $imageUrl !== Post::IMAGE_DEFAUT_PATH)

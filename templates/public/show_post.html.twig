@@ -1,0 +1,89 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<div class="container pt-5 pb-5">
+    <div class="row">
+       
+        <div class="col-12">
+            <div class="card">
+                {% if post.imageUrl is not same as null %}
+                    <img src="{{ post.imageUrl }}" class="img-fluid">
+                {% else %}
+                    <img src="{{ asset('images/defaut.png') }}" class="img-fluid">
+                {% endif %}
+                <div class="card-header">
+                    <h3>{{ post.title | upper }}</h3>
+                    <br/>
+                    <p>{{ post.createdAt | date('d-m-Y') }}</p>
+                
+                </div>
+                <div class="card-body">
+                    {{ post.content | raw }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+       <div class="row">
+        <div class="col-12 mt-5">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Les commentaires</h3>
+                </div>
+                <div class="card-body">
+                    {% if comment | length > 0 %}
+                        {% for comment in comment %}
+                            
+                                <div class="col-12 mt-3">
+                                    <div class="card">
+                                        
+                                        <div class="card-header">
+                                            <h3>{{ comment.user | upper }}</h3>
+                                            <br/>
+                                            <p>{{ comment.createdAt | date('d-m-Y') }}</p>
+                                        
+                                        </div>
+                                        <div class="card-body">
+                                            {{ comment.content | raw }}
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+    
+                        {% endfor %}
+                    {% else %}
+                        <p>Il n'y a pas encore de commentaires.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+            <div class="col-12 mb-5 mt-5">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Ajouter un commentaire</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if app.user %}
+                            {{ form_start(form) }}
+
+                            {{ form_widget(form) }}
+
+                            <button class="btn btn-primary mt-3" type="submit"> Publier</button>
+
+                            {{ form_end(form) }}
+                        {% else %}
+                            <p>Pour créer un commentaire, vous devez être inscrit.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+    </div>
+
+</div>
+{% endblock %}

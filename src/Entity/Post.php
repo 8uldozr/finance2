@@ -16,6 +16,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class Post
 {
+
+    const IMAGE_DEFAUT_PATH = '/images/defaut.jpg';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -40,7 +43,7 @@ class Post
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $imageUrl;
+    private $imageUrl = self::IMAGE_DEFAUT_PATH;
 
     /**
      * @ORM\Column(type="date")
@@ -63,6 +66,11 @@ class Post
     private $comments;
 
     /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="category")
+     */
+    private $name;
+
+    /**
     * @ORM\PrePersist
     */
     public function PrePersist()
@@ -75,6 +83,7 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->name = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,6 +187,36 @@ class Post
             // set the owning side to null (unless already changed)
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getName(): Collection
+    {
+        return $this->name;
+    }
+
+    public function addName(Category $name): self
+    {
+        if (!$this->name->contains($name)) {
+            $this->name[] = $name;
+            $name->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeName(Category $name): self
+    {
+        if ($this->name->removeElement($name)) {
+            // set the owning side to null (unless already changed)
+            if ($name->getCategory() === $this) {
+                $name->setCategory(null);
             }
         }
 

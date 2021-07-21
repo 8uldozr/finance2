@@ -35,7 +35,7 @@ class CreatePostController extends AbstractController{
 
             $em->flush();
 
-            $this->addFlash('success','good');
+            $this->addFlash('danger','good');
 
             return $this->redirectToRoute('forum');
 

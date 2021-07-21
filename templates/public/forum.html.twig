@@ -7,6 +7,9 @@
     <div class="container col-3">
 
         <h2>Bienvenue sur le forum</h2>
+    <div class="row">
+        {% include "public/shared/_messages_flash.html.twig" %}
+    </div>
 
     </div>
         {% if app.user %}
@@ -24,13 +27,15 @@
                         <h3>{{ post.title | upper }}</h3>
                     </div>
                     <div class="card-content">
-                        {{ post.content }}
+                        {{ post.content | raw }}
                     </div>
                     <div class="card-footer">
                         {{ post.createdAt | date('d-m-Y') }}
                     </div>
+                    <a class="btn btn-sm btn-primary mt-3" href="{{ path('public_show_post', {'id' : post.id }) }}">Voir +</a>
                 {% if app.user and post.user is same as app.user %}
                     <a href="{{ path('edit', {'id' : post.id }) }}"><button class="btn btn-primary mt-3" type="submit"> Modifiez vos analyses </button></a>
+                    <a href="{{ path('delete', {'id' : post.id }) }}"><button class="btn btn-primary mt-3" type="submit"> Supprimer vos analyses </button></a>
                 {% endif %}
                 </div>
             </div>

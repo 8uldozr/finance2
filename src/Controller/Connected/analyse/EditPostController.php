@@ -17,11 +17,12 @@ class EditPostController extends AbstractController{
     /**
      * @Route("edit/{id}", name="edit")
      */
-    public function create(int $id, Request $request, EntityManagerInterface $em, ImageService $imageService, PostRepository $postRepository)
+    public function edit(int $id, Request $request, EntityManagerInterface $em, ImageService $imageService, PostRepository $postRepository)
     {
         $post = $postRepository->find($id);
 
         $user = $this->getUser();
+        
             if($post->getUser() !== $user)
             {
                 $this->addFlash('danger', 'Accès interdit');
@@ -31,8 +32,6 @@ class EditPostController extends AbstractController{
         $oldImage = $post->getImageUrl();
 
         $form = $this->createForm(PostType::class, $post);
-
-        $form = $this->createForm(PostType::class,$post);
 
         $form->handleRequest($request);
 
@@ -44,7 +43,6 @@ class EditPostController extends AbstractController{
             $image = $form->get("imageUrl")->getData();
 
             $imageService->edit($image, $post, $oldImage);
-
 
             $em->flush();
 
