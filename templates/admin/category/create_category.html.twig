@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <div class="card-body">
+
+        {{ form_start(formCategory) }}
+
+        {{ form_widget(formCategory) }}
+
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+
+        {{ form_end(formCategory) }}
+
+    </div>
+
+{% endblock %}

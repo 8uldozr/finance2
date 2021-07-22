@@ -12,20 +12,26 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Analyses</a>
+
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="{{ path('forum') }}">Indice</a>
-            <a class="dropdown-item" href="{{ path('forum') }}">Actions</a>
-            <a class="dropdown-item" href="{{ path('forum') }}">Commodities</a>
-            <a class="dropdown-item" href="{{ path('forum') }}">Crypto</a>
+            {% for category in categoryRepository.findAll() %}
+            <a class="dropdown-item" href="{{ path('forum', {'slug' : category.slug }) }}"><p>{{ category.name }}</p></a>
+            {% endfor %}
           </div>
+          
         </li>
-        <li class="nav-item">
         <li class="nav-item">
           <a class="nav-link" href="#">Nous contacter</a>
         </li>
 
+
         {% if app.user %}
 
+        {% if app.user.roles[0] is same as "ROLE_ADMIN"%}
+
+        <a class="nav-link" href="{{ path('adminHome') }}">AdminZone</a>
+
+        {% endif %}
               <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
 
         {% else %}

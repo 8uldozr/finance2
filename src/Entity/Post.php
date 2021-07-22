@@ -66,9 +66,10 @@ class Post
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="category")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $name;
+    private $category;
 
     /**
     * @ORM\PrePersist
@@ -193,32 +194,14 @@ class Post
         return $this;
     }
 
-    /**
-     * @return Collection|Category[]
-     */
-    public function getName(): Collection
+    public function getCategory(): ?Category
     {
-        return $this->name;
+        return $this->category;
     }
 
-    public function addName(Category $name): self
+    public function setCategory(?Category $category): self
     {
-        if (!$this->name->contains($name)) {
-            $this->name[] = $name;
-            $name->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeName(Category $name): self
-    {
-        if ($this->name->removeElement($name)) {
-            // set the owning side to null (unless already changed)
-            if ($name->getCategory() === $this) {
-                $name->setCategory(null);
-            }
-        }
+        $this->category = $category;
 
         return $this;
     }
