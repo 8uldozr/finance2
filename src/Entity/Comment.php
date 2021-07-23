@@ -40,6 +40,17 @@ class Comment
      */
     private $post;
 
+     /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if(empty($this->getCreatedAt))
+        {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
     public function getId(): ?int
     {
         return $this->id;

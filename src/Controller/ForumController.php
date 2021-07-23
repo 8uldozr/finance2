@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\PostRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,29 +12,19 @@ class ForumController extends AbstractController
     /**
      *  @Route("/forum/{slug}", name="forum")
      */
-    public function displayForum(string $slug,PostRepository $postRepository): Response
+    public function displayForum(string $slug,CategoryRepository $categoryRepository): Response
     {
-
-        $post = $postRepository->findOneBy([
+        $category = $categoryRepository->findOneBy([
             'slug' => $slug
         ]);
-
-        if(!$post)
+        if(!$category)
         {
             $this->addFlash('warning','La catégorie n\'existe pas');
             return $this->redirectToRoute('public_home');
         }
 
-        $category = $post->getCategory();
-        $postAssociate = [];
-
-        if($category)
-        {
-            $postAssociate = $postRepository->findPost($category);
-        }
-        return $this->render('forum.html.twig',[
-            'post' => $post,
-            'postAssociate' => $postAssociate
+        return $this->render('public/forum.html.twig',[
+            'category' => $category
         ]);
     }
 }
